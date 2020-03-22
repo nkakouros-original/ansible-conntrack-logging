@@ -5,3 +5,5 @@
     - name: "Include nkakouros.conntrack-logging"
       include_role:
         name: "nkakouros.conntrack-logging"
+      vars:
+        conntrack_logging_conntrack_path: /usr/sbin/conntrack

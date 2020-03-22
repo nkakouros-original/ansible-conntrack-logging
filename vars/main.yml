@@ -1,2 +1,8 @@
 ---
-# vars file for nkakouros.conntrack-logging
+
+conntrack_logging_journalbeat:
+  journalbeat:
+    - paths: []
+      include_matches:
+        - syslog.identifier: conntrack
+  processors: ~

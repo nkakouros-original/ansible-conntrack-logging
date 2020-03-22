@@ -1,2 +1,4 @@
 ---
-# tasks file for nkakouros.conntrack-logging
+
+- include_tasks: conntrack-logging.yml
+  when: conntrack_logging_enabled | bool

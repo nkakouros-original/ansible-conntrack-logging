@@ -1,0 +1,10 @@
+# vi: ft=systemd.jinja2
+[Unit]
+Description=Harvest the conntrack table periodically
+
+[Timer]
+OnBootSec=1s
+OnUnitActiveSec={{ conntrack_logging_timer_period }}
+
+[Install]
+WantedBy=timers.target

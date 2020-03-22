@@ -1,0 +1,28 @@
+---
+
+language: python
+
+env:
+  global:
+    - ROLE_NAME: conntrack-logging
+  matrix:
+    - MOLECULE_DISTRO=ubuntu1604
+    - MOLECULE_DISTRO=ubuntu1804
+    # - MOLECULE_DISTRO=debian8 MOLECULE_INIT_CMD=/lib/systemd/systemd
+    # - MOLECULE_DISTRO=debian9 MOLECULE_INIT_CMD=/lib/systemd/systemd
+    # - MOLECULE_DISTRO=centos6 MOLECULE_INIT_CMD=/lib/systemd/systemd
+    # - MOLECULE_DISTRO=centos7 MOLECULE_INIT_CMD=/lib/systemd/systemd
+
+before_install:
+  - cd ../
+  - mv ansible-role-$ROLE_NAME nkakouros.$ROLE_NAME
+  - cd nkakouros.$ROLE_NAME
+
+install:
+  - pip install docker molecule
+
+script:
+  - molecule test
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

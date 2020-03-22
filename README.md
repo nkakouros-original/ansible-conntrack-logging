@@ -1,38 +1,62 @@
-Role Name
+[![Build Status](https://travis-ci.com/nkakouros-original/ansible-role-conntrack-logging.svg?branch=master)](https://travis-ci.com/nkakouros-original/ansible-role-conntrack-logging)
+[![Galaxy](https://img.shields.io/badge/galaxy-nkakouros.conntrack-logging-blue.svg)](https://galaxy.ansible.com/nkakouros/conntrack-logging/)
+
+ansible-role-conntrack-logging
 =========
 
-A brief description of the role goes here.
+Installs and configures logging for conntrack table entries into systemd's
+journal.
+
+Description
+-----------
+
+This role will install a systemd service file and a timer to periodically
+harvest the conntrack table entries into systemd's journal.
+
+In case you need it, it also includes (in [vars/main.yml](vars/main.yml))
+a sample configuration for
+[journalbeat](https://www.elastic.co/guide/en/beats/journalbeat/current/index.html)
+that will log conntrack entries into elasticsearch.
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+None
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
+
+Role Variables
+--------------
+
+Look at the [defaults/main.yml](defaults/main.yml) file for this roles variables and their
+documentation.
+
+Comparison with other roles
+---------------------------
+
+If you need more control over the conntrack tools, you can use other ansible
+roles in parallel with this one:
+
+- https://github.com/mrlesmithjr/ansible-conntrackd to install/configure
+  conntrackd
+- https://github.com/Oefenweb/ansible-conntrack to configure the conntrack
+  subsystem
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+For an example playbook, see [molecule/default/converge.yml](molecule/default/converge.yml).
 
 License
 -------
 
-BSD
+GPLv3
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Nikolaos Kakouros (nkak@kth.se)

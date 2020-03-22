@@ -1,0 +1,33 @@
+---
+
+- name: Install dependencies
+  package:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - conntrack
+
+- block:
+    - name: Resolve `conntrack` path
+      command: which conntrack
+      register: _conntrack_logging_conntrack_path
+
+    - name: Set `conntrack` path variable
+      set_fact:
+        conntrack_logging_conntrack_path: "{{ _conntrack_logging_conntrack_path.stdout }}"
+  when: conntrack_logging_conntrack_path is not defined
+
+- name: Install systemd service files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item }}"
+  loop:
+    - conntrack-logging.timer
+    - conntrack-logging.service
+  notify: conntrack-logging-reload
+
+- name: Enable systemd timer
+  systemd:
+    name: conntrack-logging.timer
+    enabled: true
+    state: started

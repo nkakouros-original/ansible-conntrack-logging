@@ -1,2 +1,12 @@
 ---
-# handlers file for nkakouros.conntrack-logging
+
+- name: Reload and restart systemd service files
+  systemd:
+    name: conntrack-logging.timer
+    enabled: true
+    state: restarted
+    daemon_reload: true
+  loop: [1, 2]
+  loop_control:
+    pause: 1
+  listen: conntrack-logging-reload

@@ -1,2 +1,16 @@
 ---
-# defaults file for nkakouros.conntrack-logging
+
+conntrack_logging_enabled: true
+# Set to false to completely disable this role.
+
+conntrack_logging_timer_period: 28s
+# How often the conntrack table should be read. This must be in systemd time
+# format (see
+# https://www.freedesktop.org/software/systemd/man/systemd.time.html). By
+# default, conntrack entries expire after 30 seconds. To not flood systemd's
+# journal with many, almost identical lines, I have chosen `28s`, which makes
+# sure that lines will appear maximum twice.
+
+conntrack_logging_conntrack_options: '-L conntrack -o ktimestamp -o id -o extended'
+# A string of options to pass to the conntrack utility that is used to read the
+# conntrack table.
