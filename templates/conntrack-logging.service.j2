@@ -3,3 +3,4 @@ Description=Conntrack table logging service
 
 [Service]
 ExecStart={{ conntrack_logging_conntrack_path }} {{ conntrack_logging_conntrack_options }}
+Restart=always

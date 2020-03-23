@@ -2,7 +2,24 @@
 
 conntrack_logging_journalbeat:
   journalbeat:
-    - paths: []
-      include_matches:
-        - syslog.identifier: conntrack
-  processors: ~
+    inputs:
+      - paths: []
+        include_matches:
+          - "syslog.identifier=conntrack"
+  processors:
+    - drop_event:
+        when:
+          contains:
+            message: "flow entries have been shown"
+    - script:
+        lang: javascript
+        id: conntrack-to-fields
+        file: scripts/conntrack.journalbeat.js
+    - timestamp:
+        field: start_time
+        layouts:
+          - "Mon Jan _2 15:04:05 2006"
+        test:
+          - "Mon Mar 23 13:27:22 2020"
+
+conntrack_logging_journalbeat_processor_script: "{{ role_path }}/files/conntrack.journalbeat.js"

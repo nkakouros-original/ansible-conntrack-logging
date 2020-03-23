@@ -17,17 +17,21 @@
         conntrack_logging_conntrack_path: "{{ _conntrack_logging_conntrack_path.stdout }}"
   when: conntrack_logging_conntrack_path is not defined
 
+- name: Enable conntrack timestamp
+  sysctl:
+    name: net.netfilter.nf_conntrack_timestamp
+    value: 1
+
 - name: Install systemd service files
   template:
     src: "{{ item }}.j2"
     dest: "/etc/systemd/system/{{ item }}"
   loop:
-    - conntrack-logging.timer
     - conntrack-logging.service
   notify: conntrack-logging-reload
 
-- name: Enable systemd timer
+- name: Enable systemd service
   systemd:
-    name: conntrack-logging.timer
+    name: conntrack-logging.service
     enabled: true
     state: started
