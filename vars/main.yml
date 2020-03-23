@@ -17,6 +17,7 @@ conntrack_logging_journalbeat:
         file: scripts/conntrack.journalbeat.js
     - timestamp:
         field: start_time
+        ignore_failure: true
         layouts:
           - "Mon Jan _2 15:04:05 2006"
         test:
