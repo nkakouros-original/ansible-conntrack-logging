@@ -3,6 +3,6 @@
 conntrack_logging_enabled: true
 # Set to false to completely disable this role.
 
-conntrack_logging_conntrack_options: '--event --event-mask DESTROY -o ktimestamp -o id -o extended'
+conntrack_logging_conntrack_options: '--event --event-mask NEW -o ktimestamp -o id -o extended'
 # A string of options to pass to the conntrack utility that is used to read the
 # conntrack table.

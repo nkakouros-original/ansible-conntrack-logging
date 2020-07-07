@@ -1,0 +1,48 @@
+---
+
+- if:
+    equals:
+      syslog.identifier: "conntrack"
+  then:
+    - drop_event:
+        when:
+          contains:
+            message: "flow events have been shown"
+    - script:
+        lang: javascript
+        id: conntrack-to-fields
+        file: scripts/journalbeat.conntrack-logging.event.js
+    - timestamp:
+        field: "conntrack.start_time"
+        ignore_failure: true
+        layouts:
+          - "Mon Jan _2 15:04:05 2006"
+        test:
+          - "Mon Mar 23 13:27:22 2020"
+    - timestamp:
+        field: "conntrack.start_time"
+        target_field: "event.start"
+        ignore_failure: true
+        layouts:
+          - "Mon Jan _2 15:04:05 2006"
+        test:
+          - "Mon Mar 23 13:27:22 2020"
+    - timestamp:
+        field: "conntrack.end_time"
+        target_field: "event.end"
+        ignore_failure: true
+        layouts:
+          - "Mon Jan _2 15:04:05 2006"
+        test:
+          - "Mon Mar 23 13:27:22 2020"
+    - timestamp:
+        field: "conntrack.timestamp"
+        ignore_failure: true
+        layouts:
+          - UNIX_MS
+    - timestamp:
+        field: "conntrack.timestamp"
+        target_field: "event.start"
+        ignore_failure: true
+        layouts:
+          - UNIX_MS

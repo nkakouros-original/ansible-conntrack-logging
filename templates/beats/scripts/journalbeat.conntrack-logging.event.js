@@ -1,12 +1,15 @@
 function process(event) {
   var m = event.Get("message");
 
-  if (m.match(/^(?!(\[NEW\]|\[UPDATE\]|\[DESTROY\])).*/)) return 1
-
-  m = m.split(' ').filter(function (s) {return s != ''}).map(function (s) {return s.split('=')});
+  m = m.replace('\t', ' ').split(' ').filter(function (s) {return s != ''}).map(function (s) {return s.split('=')});
 
   var i = 0;
   var c = [];
+
+  var timestamp = m[i][0].substring(1, m[i][0].length-1)
+  timestamp = timestamp*1000
+  c[i] = ["timestamp", timestamp.toString()]
+  i++;
 
   c[i] = ['event', m[i][0].substring(1, m[i][0].length-1)];
   i++;
@@ -15,7 +18,7 @@ function process(event) {
   c[i] = ['trans_proto', m[i++][0]];
   c[i] = ['trans_proto_num', m[i++][0]];
 
-	if (!isNaN(m[i+1][0])) {
+  if (!isNaN(m[i+1][0])) {
     c[i] = ['timeout', m[i++][0]];
   }
 
@@ -41,7 +44,7 @@ function process(event) {
     if (c[i][0] == 'type') c[i][0] = 'type' + d;
     if (c[i][0] == 'code') c[i][0] = 'code' + d;
     if (typeof c[i][1] == 'undefined') {
-      c[i] = ['state', m[i][0]];
+      c[i] = ['state', m[i][0].substring(1, m[i][0].length-1)];
     }
     if (c[i][0] == 'delta-time') c[i][0] = 'delta_time';
   }
