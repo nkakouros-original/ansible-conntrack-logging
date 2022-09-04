@@ -1,5 +1,6 @@
 ---
 
-- paths: []
+- type: journald
+  id: conntrack-logging.service
   include_matches:
     - "syslog.identifier=conntrack"

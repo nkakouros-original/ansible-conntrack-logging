@@ -11,7 +11,7 @@
     - script:
         lang: javascript
         id: conntrack-to-fields
-        file: scripts/journalbeat.conntrack-logging.event.js
+        file: scripts/filebeat.conntrack-logging.event.js
     - timestamp:
         field: "conntrack.start_time"
         ignore_failure: true
